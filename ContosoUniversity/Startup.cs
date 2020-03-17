@@ -50,6 +50,7 @@ namespace ContosoUniversity
                     opt.Conventions.ConfigureFilter(new DbContextTransactionPageFilter());
                     opt.Conventions.ConfigureFilter(new ValidatorPageFilter());
                 })
+                .AddRazorRuntimeCompilation()
                 .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup>(); });
 
             services.AddMvc(opt => opt.ModelBinderProviders.Insert(0, new EntityModelBinderProvider()));
