@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using ContosoUniversity.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.EntityFrameworkCore;
+using TagBuilder = Microsoft.AspNetCore.Mvc.Rendering.TagBuilder;
 
 namespace ContosoUniversity.Infrastructure.TagHelpers
 {
@@ -13,6 +18,7 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
         private const string ForAttributeName = "asp-for";
 
         private readonly IHtmlGenerator _generator;
+        private readonly SchoolContext _dbContext;
 
         [HtmlAttributeNotBound]
         [ViewContext]
@@ -21,15 +27,16 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
         [HtmlAttributeName(ForAttributeName)]
         public ModelExpression For { get; set; }
 
-        public FormBlockTagHelper(IHtmlGenerator generator)
+        public FormBlockTagHelper(IHtmlGenerator generator, SchoolContext dbContext)
         {
             _generator = generator;
+            _dbContext = dbContext;
         }
 
-        public override void Process(TagHelperContext context, TagHelperOutput output)
+        public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             var label = GenerateLabel();
-            var field = GenerateField();
+            var field = await GenerateField();
             var validationSpan = GenerateValidationMessage();
 
             var classes = output.Attributes.FirstOrDefault(a => a.Name == "class")?.Value;
@@ -51,7 +58,7 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
         private TagBuilder GenerateLabel() =>
             _generator.GenerateLabel(ViewContext, For.ModelExplorer, For.Name, For.Metadata.DisplayName ?? BreakUpCamelCase(For.Metadata.Name), new { @class = "control-label"} );
 
-        private TagBuilder GenerateField()
+        private async Task<TagBuilder> GenerateField()
         {
             var modelType = For.ModelExplorer.ModelType;
             TagBuilder tagBuilder = null;
@@ -88,6 +95,16 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
             {
                 tagBuilder = _generator.GenerateTextBox(ViewContext, For.ModelExplorer, For.Name, For.Model, null,
                     new { @class = "form-control", type = "date" });
+            }
+            else if(typeof(ISelectList).IsAssignableFrom(modelType))
+            {
+                var records = await _dbContext.Set(modelType)
+                    .Cast<ISelectList>()
+                    .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
+                    .ToArrayAsync();
+
+                tagBuilder = _generator.GenerateSelect(ViewContext, For.ModelExplorer, string.Empty, For.Name, records, false, 
+                    new { @class = "form-control" });
             }
 
             return tagBuilder;

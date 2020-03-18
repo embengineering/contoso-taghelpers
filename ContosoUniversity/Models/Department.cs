@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ContosoUniversity.Infrastructure;
 
 namespace ContosoUniversity.Models
 {
-    public class Department : IEntity
+    public class Department : IEntity, ISelectList
     {
         [Column("DepartmentID")]
         public int Id { get; set; }
