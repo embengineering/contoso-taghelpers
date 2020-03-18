@@ -55,7 +55,7 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
             _generator.GenerateValidationMessage(ViewContext, For.ModelExplorer, For.Name, string.Empty, "span", new { @class = "text-danger" });
 
         private TagBuilder GenerateLabel() =>
-            _generator.GenerateLabel(ViewContext, For.ModelExplorer, For.Name, For.Metadata.DisplayName ?? BreakUpCamelCase(For.Metadata.Name), new { @class = "control-label"} );
+            _generator.GenerateLabel(ViewContext, For.ModelExplorer, For.Name, For.Metadata.DisplayName ?? For.Metadata.Name.BreakUpCamelCase(), new { @class = "control-label"} );
 
         private async Task<TagBuilder> GenerateField()
         {
@@ -112,19 +112,6 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
                 return "text";
 
             return string.Empty;
-        }
-
-        private string BreakUpCamelCase(string fieldName)
-        {
-            var patterns = new[]
-            {
-                "([a-z])([A-Z])",
-                "([0-9])([a-zA-Z])",
-                "([a-zA-Z])([0-9])"
-            };
-            var output = patterns.Aggregate(fieldName,
-                (current, pattern) => Regex.Replace(current, pattern, "$1 $2", RegexOptions.IgnorePatternWhitespace));
-            return output.Replace('_', ' ');
         }
     }
 }

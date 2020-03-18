@@ -13,34 +13,34 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            <display-label-tag for="Data.Id"/>
+            <display-label asp-for="Data.Id"/>
         </dt>
         <dd>
-            <display-tag for="Data.Id"/>
+            <display asp-for="Data.Id"/>
         </dd>
         <dt>
-            <display-label-tag for="Data.Title" />
+            <display-label asp-for="Data.Title" />
         </dt>
         <dd>
-            <display-tag for="Data.Title" />
+            <display asp-for="Data.Title" />
         </dd>
         <dt>
-            <display-label-tag for="Data.Credits" />
+            <display-label asp-for="Data.Credits" />
         </dt>
         <dd>
-            <display-tag for="Data.Credits" />
+            <display asp-for="Data.Credits" />
         </dd>
         <dt>
-            <display-label-tag for="Data.DepartmentName" />
+            <display-label asp-for="Data.DepartmentName" />
         </dt>
         <dd>
-            <display-tag for="Data.DepartmentName" />
+            <display asp-for="Data.DepartmentName" />
         </dd>
     </dl>
     
     <form method="post">
-        <input-tag for="Data.Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input asp-for="Data.Id" type="hidden" />
+        <button type="submit" class="btn btn-danger">Delete</button> |
         <a asp-page="Index">Back to List</a>
     </form>
 </div>
