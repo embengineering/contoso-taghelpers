@@ -13,9 +13,9 @@
     <div class="col-md-4">
         <form method="post">
             @Html.ValidationDiv()
-            @Html.FormBlock(m => m.Data.Number)
-            @Html.FormBlock(m => m.Data.Title)
-            @Html.FormBlock(m => m.Data.Credits)
+            <form-block asp-for="Data.Number" />
+            <form-block asp-for="Data.Title" />
+            <form-block asp-for="Data.Credits" />
             @Html.FormBlock(m => m.Data.Department)
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
