@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -8,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.EntityFrameworkCore;
-using TagBuilder = Microsoft.AspNetCore.Mvc.Rendering.TagBuilder;
+using StackExchange.Profiling.Internal;
 
 namespace ContosoUniversity.Infrastructure.TagHelpers
 {
@@ -61,8 +60,30 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
         private async Task<TagBuilder> GenerateField()
         {
             var modelType = For.ModelExplorer.ModelType;
+            var fieldType = GetInputTypeFromModel(modelType);
             TagBuilder tagBuilder = null;
 
+            if (!fieldType.IsNullOrWhiteSpace())
+            {
+                tagBuilder = _generator.GenerateTextBox(ViewContext, For.ModelExplorer, For.Name, For.Model, null,
+                    new { @class = "form-control", type = fieldType });
+            } 
+            else if (typeof(ISelectList).IsAssignableFrom(modelType))
+            {
+                var records = await _dbContext.Set(modelType)
+                    .Cast<ISelectList>()
+                    .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
+                    .ToArrayAsync();
+
+                tagBuilder = _generator.GenerateSelect(ViewContext, For.ModelExplorer, string.Empty, For.Name, records,
+                    false, new { @class = "form-control" });
+            }
+
+            return tagBuilder;
+        }
+
+        private string GetInputTypeFromModel(Type modelType)
+        {
             var numberTypes = new[]
             {
                 typeof(int),
@@ -82,32 +103,15 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
             };
 
             if (numberTypes.Contains(modelType))
-            {
-                tagBuilder = _generator.GenerateTextBox(ViewContext, For.ModelExplorer, For.Name, For.Model, null,
-                    new {@class = "form-control", type = "number"});
-            }
-            else if (textTypes.Contains(modelType))
-            {
-                tagBuilder = _generator.GenerateTextBox(ViewContext, For.ModelExplorer, For.Name, For.Model, null,
-                    new { @class = "form-control", type = "text" });
-            }
-            else if (dateTypes.Contains(modelType))
-            {
-                tagBuilder = _generator.GenerateTextBox(ViewContext, For.ModelExplorer, For.Name, For.Model, null,
-                    new { @class = "form-control", type = "date" });
-            }
-            else if(typeof(ISelectList).IsAssignableFrom(modelType))
-            {
-                var records = await _dbContext.Set(modelType)
-                    .Cast<ISelectList>()
-                    .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
-                    .ToArrayAsync();
+                return "number";
 
-                tagBuilder = _generator.GenerateSelect(ViewContext, For.ModelExplorer, string.Empty, For.Name, records, false, 
-                    new { @class = "form-control" });
-            }
+            if (dateTypes.Contains(modelType))
+                return "date";
 
-            return tagBuilder;
+            if (textTypes.Contains(modelType))
+                return "text";
+
+            return string.Empty;
         }
 
         private string BreakUpCamelCase(string fieldName)
