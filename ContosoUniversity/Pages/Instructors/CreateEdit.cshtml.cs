@@ -31,7 +31,7 @@ namespace ContosoUniversity.Pages.Instructors
         {
             await _mediator.Send(Data);
 
-            return this.RedirectToPageJson(nameof(Index));
+            return RedirectToPage(nameof(Index));
         }
 
         public async Task OnGetEditAsync(Query query) => Data = await _mediator.Send(query);
@@ -40,7 +40,7 @@ namespace ContosoUniversity.Pages.Instructors
         {
             await _mediator.Send(Data);
 
-            return this.RedirectToPageJson(nameof(Index));
+            return RedirectToPage(nameof(Index));
         }
 
         public class Query : IRequest<Command>

@@ -29,7 +29,7 @@ namespace ContosoUniversity.Pages.Departments
         {
             await _mediator.Send(Data);
 
-            return this.RedirectToPageJson("Index");
+            return RedirectToPage(nameof(Index));
         }
 
         public class Validator : AbstractValidator<Command>

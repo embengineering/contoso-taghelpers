@@ -22,7 +22,7 @@ namespace ContosoUniversity.Pages.Courses
         {
             await _mediator.Send(Data);
 
-            return this.RedirectToPageJson("Index");
+            return RedirectToPage(nameof(Index));
         }
 
         public class Command : IRequest<int>
