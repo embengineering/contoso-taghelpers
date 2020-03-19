@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using ContosoUniversity.Data;
 using ContosoUniversity.Infrastructure.Attributes;
+using ContosoUniversity.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -68,20 +69,31 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
 
             if (!fieldType.IsNullOrWhiteSpace())
             {
-                tagBuilder = _generator.GenerateTextBox(ViewContext, For.ModelExplorer, For.Name, For.Model, null,
-                    new { @class = "form-control", type = fieldType });
+                tagBuilder = BuildInput(fieldType);
             } 
-            else if (typeof(ISelectList).IsAssignableFrom(modelType))
+            else if (typeof(IEntity).IsAssignableFrom(modelType))
             {
-                var containerType = For.Metadata.ContainerType;
-                var property = containerType.GetProperty(For.Metadata.PropertyName);
-                var dropDownListAttribute = property.GetCustomAttribute<SelectListAttribute>();
-                var items = await dropDownListAttribute.GetOptions(_dbContext);
-
-                tagBuilder = _generator.GenerateSelect(ViewContext, For.ModelExplorer, null, For.Name, items,
-                    false, new { @class = "form-control" });
+                tagBuilder = await BuildSelect();
             }
 
+            return tagBuilder;
+        }
+
+        private async Task<TagBuilder> BuildSelect()
+        {
+            var containerType = For.Metadata.ContainerType;
+            var property = containerType.GetProperty(For.Metadata.PropertyName);
+            var dropDownListAttribute = property.GetCustomAttribute<SelectListAttribute>();
+            var items = await dropDownListAttribute.GetOptions(_dbContext);
+            var tagBuilder = _generator.GenerateSelect(ViewContext, For.ModelExplorer, null, For.Name, items,
+                false, new {@class = "form-control"});
+            return tagBuilder;
+        }
+
+        private TagBuilder BuildInput(string fieldType)
+        {
+            var tagBuilder = _generator.GenerateTextBox(ViewContext, For.ModelExplorer, For.Name, For.Model, null,
+                new {@class = "form-control", type = fieldType});
             return tagBuilder;
         }
 
