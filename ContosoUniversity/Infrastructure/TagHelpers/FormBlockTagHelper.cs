@@ -90,8 +90,11 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
             var numberTypes = new[]
             {
                 typeof(int),
+                typeof(int?),
                 typeof(double),
-                typeof(decimal)
+                typeof(double?),
+                typeof(decimal),
+                typeof(decimal?)
             };
 
             var textTypes = new[]
@@ -102,7 +105,9 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
             var dateTypes = new[]
             {
                 typeof(DateTime),
-                typeof(DateTimeOffset)
+                typeof(DateTime?),
+                typeof(DateTimeOffset),
+                typeof(DateTimeOffset?)
             };
 
             if (numberTypes.Contains(modelType))
