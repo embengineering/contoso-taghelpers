@@ -5,6 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using ContosoUniversity.Data;
+using ContosoUniversity.Infrastructure.Attributes;
+using ContosoUniversity.Infrastructure.SelectListProviders;
 using ContosoUniversity.Models;
 using FluentValidation;
 using MediatR;
@@ -61,6 +63,7 @@ namespace ContosoUniversity.Pages.Departments
             [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
             public DateTime? StartDate { get; set; }
 
+            [SelectList(typeof(InstructorSelectListOptionsProvider))]
             public Instructor Administrator { get; set; }
         }
 

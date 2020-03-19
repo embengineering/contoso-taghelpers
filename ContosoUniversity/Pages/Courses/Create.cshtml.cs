@@ -2,6 +2,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using ContosoUniversity.Data;
+using ContosoUniversity.Infrastructure.Attributes;
+using ContosoUniversity.Infrastructure.SelectListProviders;
 using ContosoUniversity.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -29,8 +31,12 @@ namespace ContosoUniversity.Pages.Courses
         {
             [IgnoreMap]
             public int Number { get; set; }
+
             public string Title { get; set; }
+
             public int Credits { get; set; }
+
+            [SelectList(typeof(DepartmentSelectListOptionsProvider))]
             public Department Department { get; set; }
         }
 

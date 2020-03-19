@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using ContosoUniversity.Data;
+using ContosoUniversity.Infrastructure.Attributes;
+using ContosoUniversity.Infrastructure.SelectListProviders;
 using ContosoUniversity.Models;
 using FluentValidation;
 using MediatR;
@@ -46,8 +48,11 @@ namespace ContosoUniversity.Pages.Departments
 
             public DateTime? StartDate { get; set; }
 
+            [SelectList(typeof(InstructorSelectListOptionsProvider))]
             public Instructor Administrator { get; set; }
+
             public int Id { get; set; }
+
             public byte[] RowVersion { get; set; }
         }
 

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
-using System.Text.RegularExpressions;
+using System.Reflection;
 using System.Threading.Tasks;
 using ContosoUniversity.Data;
+using ContosoUniversity.Infrastructure.Attributes;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using Microsoft.EntityFrameworkCore;
 using StackExchange.Profiling.Internal;
 
 namespace ContosoUniversity.Infrastructure.TagHelpers
@@ -59,6 +59,9 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
 
         private async Task<TagBuilder> GenerateField()
         {
+            if (ViewContext == null || For == null)
+                return null;
+
             var modelType = For.ModelExplorer.ModelType;
             var fieldType = GetInputTypeFromModel(modelType);
             TagBuilder tagBuilder = null;
@@ -70,12 +73,12 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
             } 
             else if (typeof(ISelectList).IsAssignableFrom(modelType))
             {
-                var records = await _dbContext.Set(modelType)
-                    .Cast<ISelectList>()
-                    .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
-                    .ToArrayAsync();
+                var containerType = For.Metadata.ContainerType;
+                var property = containerType.GetProperty(For.Metadata.PropertyName);
+                var dropDownListAttribute = property.GetCustomAttribute<SelectListAttribute>();
+                var items = await dropDownListAttribute.GetOptions(_dbContext);
 
-                tagBuilder = _generator.GenerateSelect(ViewContext, For.ModelExplorer, string.Empty, For.Name, records,
+                tagBuilder = _generator.GenerateSelect(ViewContext, For.ModelExplorer, null, For.Name, items,
                     false, new { @class = "form-control" });
             }
 
