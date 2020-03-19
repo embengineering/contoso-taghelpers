@@ -1,15 +1,9 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using ContosoUniversity.Data;
-using ContosoUniversity.Infrastructure.Attributes;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using StackExchange.Profiling.Internal;
 
 namespace ContosoUniversity.Infrastructure.TagHelpers
 {
@@ -19,7 +13,6 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
         private const string ForAttributeName = "asp-for";
 
         private readonly IHtmlGenerator _generator;
-        private readonly SchoolContext _dbContext;
 
         [HtmlAttributeNotBound]
         [ViewContext]
@@ -28,13 +21,12 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
         [HtmlAttributeName(ForAttributeName)]
         public ModelExpression For { get; set; }
 
-        public FormBlockDisplayTagHelper(IHtmlGenerator generator, SchoolContext dbContext)
+        public FormBlockDisplayTagHelper(IHtmlGenerator generator)
         {
             _generator = generator;
-            _dbContext = dbContext;
         }
 
-        public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+        public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             var label = GenerateLabel();
             var displayField = GenerateDisplayField();
