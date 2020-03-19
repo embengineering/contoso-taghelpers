@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using ContosoUniversity.Data;
+using ContosoUniversity.Infrastructure.Attributes;
+using ContosoUniversity.Infrastructure.SelectListProviders;
 using ContosoUniversity.Models;
 using FluentValidation;
 using MediatR;
@@ -67,8 +69,12 @@ namespace ContosoUniversity.Pages.Courses
         {
             [Display(Name = "Number")]
             public int Id { get; set; }
+
             public string Title { get; set; }
+
             public int? Credits { get; set; }
+
+            [SelectList(typeof(DepartmentSelectListOptionsProvider))]
             public Department Department { get; set; }
         }
 

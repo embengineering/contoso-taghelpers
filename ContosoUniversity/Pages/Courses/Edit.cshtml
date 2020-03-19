@@ -12,17 +12,17 @@
 <div class="row">
     <div class="col-md-4">
         <form method="post">
-            @Html.ValidationDiv()
-            <input-tag for="Data.Id" />
+            <div asp-validation-summary="All"></div>
+            <input asp-for="Data.Id" type="hidden"/>
 
             <div class="form-group">
                 <label-tag for="Data.Id" />
                 <div><display-tag for="Data.Id" /></div>
             </div>
-
-            @Html.FormBlock(m => m.Data.Title)
-            @Html.FormBlock(m => m.Data.Credits)
-            @Html.FormBlock(m => m.Data.Department)
+            
+            <form-block asp-for="Data.Title" />
+            <form-block asp-for="Data.Credits" />
+            <form-block asp-for="Data.Department" />
 
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
