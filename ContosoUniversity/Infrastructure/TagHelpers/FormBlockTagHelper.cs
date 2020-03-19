@@ -60,23 +60,16 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
 
         private async Task<TagBuilder> GenerateField()
         {
-            if (ViewContext == null || For == null)
-                return null;
-
             var modelType = For.ModelExplorer.ModelType;
             var fieldType = GetInputTypeFromModel(modelType);
-            TagBuilder tagBuilder = null;
 
             if (!fieldType.IsNullOrWhiteSpace())
-            {
-                tagBuilder = BuildInput(fieldType);
-            } 
-            else if (typeof(IEntity).IsAssignableFrom(modelType))
-            {
-                tagBuilder = await BuildSelect();
-            }
+                return BuildInput(fieldType);
 
-            return tagBuilder;
+            if (typeof(IEntity).IsAssignableFrom(modelType))
+                return await BuildSelect();
+
+            return null;
         }
 
         private async Task<TagBuilder> BuildSelect()
