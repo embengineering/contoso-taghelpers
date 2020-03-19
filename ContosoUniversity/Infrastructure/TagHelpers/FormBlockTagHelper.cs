@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -78,8 +79,11 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
             var property = containerType.GetProperty(For.Metadata.PropertyName);
             var dropDownListAttribute = property.GetCustomAttribute<SelectListAttribute>();
             var items = await dropDownListAttribute.GetOptions(_dbContext);
-            var tagBuilder = _generator.GenerateSelect(ViewContext, For.ModelExplorer, null, For.Name, items,
-                false, new {@class = "form-control"});
+            var currentValue = ((IEntity) For.Model)?.Id.ToString();
+
+            var tagBuilder = _generator.GenerateSelect(ViewContext, For.ModelExplorer, null, For.Name, items, 
+                new List<string> { currentValue }, false, new {@class = "form-control"});
+
             return tagBuilder;
         }
 
