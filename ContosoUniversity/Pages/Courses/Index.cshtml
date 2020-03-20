@@ -33,18 +33,10 @@
         @foreach (var item in Model.Data.Courses)
         {
             <tr>
-                <td>
-                    <display-tag for="Data.Courses[i].Id"/>
-                </td>
-                <td>
-                    <display-tag for="Data.Courses[i].Title" />
-                </td>
-                <td>
-                    <display-tag for="Data.Courses[i].Credits" />
-                </td>
-                <td>
-                    <display-tag for="Data.Courses[i].DepartmentName" />
-                </td>
+                <td value-for="Data.Courses[i].Id"></td>
+                <td value-for="Data.Courses[i].Title"></td>
+                <td value-for="Data.Courses[i].Credits"></td>
+                <td value-for="Data.Courses[i].DepartmentName"></td>
                 <td>
                     <a asp-page="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-page="Details" asp-route-id="@item.Id">Details</a> |
