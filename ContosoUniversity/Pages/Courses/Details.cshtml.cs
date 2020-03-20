@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,10 +39,11 @@ namespace ContosoUniversity.Pages.Courses
 
         public class Model
         {
+            [DisplayName("Number")]
             public int Id { get; set; }
             public string Title { get; set; }
             public int Credits { get; set; }
-            [Display(Name = "Department")]
+            [DisplayName("Department")]
             public string DepartmentName { get; set; }
         }
 
