@@ -89,9 +89,31 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
 
         private TagBuilder BuildInput(string fieldType)
         {
-            var tagBuilder = _generator.GenerateTextBox(ViewContext, For.ModelExplorer, For.Name, For.Model, null,
+            var value = GetValueByType();
+            var tagBuilder = _generator.GenerateTextBox(ViewContext, For.ModelExplorer, For.Name, value, null,
                 new {@class = "form-control", type = fieldType});
             return tagBuilder;
+        }
+
+        private object GetValueByType()
+        {
+            const string isoDateFormat = "yyyy-MM-dd"; // default iso format required for HTML5 date input
+
+            if (For.ModelExplorer.ModelType == typeof(DateTime?))
+            {
+                var parsedValue = (DateTime?) For.Model;
+                return parsedValue.HasValue
+                    ? parsedValue.Value.ToString(isoDateFormat)
+                    : string.Empty;
+            }
+
+            if (For.ModelExplorer.ModelType == typeof(DateTime))
+            {
+                var parsedValue = (DateTime)For.Model;
+                return parsedValue.ToString(isoDateFormat);
+            }
+
+            return For.Model;
         }
 
         private string GetInputTypeFromModel(Type modelType)
