@@ -12,12 +12,12 @@
 <div class="row">
     <div class="col-md-4">
         <form method="post">
-            @Html.ValidationDiv()
-            @Html.HiddenFor(m => m.Data.Id)
-            @Html.FormBlock(m => m.Data.LastName)
-            @Html.FormBlock(m => m.Data.FirstMidName)
-            @Html.FormBlock(m => m.Data.HireDate)
-            @Html.FormBlock(m => m.Data.OfficeAssignmentLocation)
+            <div asp-validation-summary="All"></div>
+            <input type="hidden" asp-for="Data.Id" />
+            <form-block asp-for="Data.LastName"/>
+            <form-block asp-for="Data.FirstMidName"/>
+            <form-block asp-for="Data.HireDate"/>
+            <form-block asp-for="Data.OfficeAssignmentLocation"/>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <table>
@@ -36,8 +36,8 @@
                                     <input type="checkbox"
                                            name="data.selectedCourses"
                                            value="@course.CourseId"
-                                           @(Html.Raw(course.Assigned ? "checked=\"checked\"" : "")) />
-                                    @course.CourseId :  @course.Title
+                                           @(Html.Raw(course.Assigned ? "checked=\"checked\"" : ""))/>
+                                    @course.CourseId : @course.Title
                                 </label>
                                 @:</td>
                             }
@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary"/>
             </div>
         </form>
     </div>

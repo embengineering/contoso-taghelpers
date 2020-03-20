@@ -1,4 +1,6 @@
 ﻿@page
+@using ContosoUniversity.Infrastructure
+@using ContosoUniversity.Models
 @model Instructors.Index
 
 @{
@@ -13,11 +15,11 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Last Name</th>
-            <th>First Name</th>
-            <th>Hire Date</th>
-            <th>Office</th>
-            <th>Courses</th>
+            <th>@(ModelExtensions.GetPropertyDisplayName<Instructor>(nameof(Instructor.LastName)))</th>
+            <th>@(ModelExtensions.GetPropertyDisplayName<Instructor>(nameof(Instructor.FirstMidName)))</th>
+            <th>@(ModelExtensions.GetPropertyDisplayName<Instructor>(nameof(Instructor.HireDate)))</th>
+            <th>@(ModelExtensions.GetPropertyDisplayName<Instructor>(nameof(Instructor.OfficeAssignment)))</th>
+            <th>@(ModelExtensions.GetPropertyDisplayName<Instructor>(nameof(Instructor.CourseAssignments)))</th>
             <th></th>
         </tr>
     </thead>
@@ -31,18 +33,10 @@
                 selectedRow = "table-success";
             }
             <tr class="@selectedRow">
-                <td>
-                    <display-tag for="Data.Instructors[i].LastName" />
-                </td>
-                <td>
-                    <display-tag for="Data.Instructors[i].FirstMidName" />
-                </td>
-                <td>
-                    <display-tag for="Data.Instructors[i].HireDate" />
-                </td>
-                <td>
-                    <display-tag for="Data.Instructors[i].OfficeAssignmentLocation" />
-                </td>
+                <td value-for="Data.Instructors[i].LastName"></td>
+                <td value-for="Data.Instructors[i].FirstMidName"></td>
+                <td value-for="Data.Instructors[i].HireDate"></td>
+                <td value-for="Data.Instructors[i].OfficeAssignmentLocation"></td>
                 <td>
                     @{
                         foreach (var course in item.CourseAssignments)
