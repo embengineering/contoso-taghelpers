@@ -1,4 +1,6 @@
 ﻿@page
+@using ContosoUniversity.Infrastructure
+@using ContosoUniversity.Models
 @model Courses.Index
 
 @{
@@ -14,16 +16,16 @@
     <thead>
         <tr>
             <th>
-                Number
+                @(ModelExtensions.GetPropertyDisplayName<Course>(nameof(Course.Id)))
             </th>
             <th>
-                Title
+                @(ModelExtensions.GetPropertyDisplayName<Course>(nameof(Course.Title)))
             </th>
             <th>
-                Credits
+                @(ModelExtensions.GetPropertyDisplayName<Course>(nameof(Course.Credits)))
             </th>
             <th>
-                Department
+                @(ModelExtensions.GetPropertyDisplayName<Course>(nameof(Course.Department)))
             </th>
             <th></th>
         </tr>
