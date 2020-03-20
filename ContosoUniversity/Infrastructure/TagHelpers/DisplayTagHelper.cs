@@ -16,9 +16,12 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
             // set output
             output.TagName = "span"; // omit wrapper tag
             output.TagMode = TagMode.StartTagAndEndTag;
+            output.Attributes.Add("value-for", For.Name);
 
-            // set content
-            output.Content.SetHtmlContent(For.Model.ToString());
+            // re-use ValueFor tag helper to centralize formatting
+            var tagHelper = new ValueForAttributeTagHelper { ValueFor = For };
+
+            tagHelper.Process(context, output);
         }
     }
 }
