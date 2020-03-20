@@ -15,18 +15,10 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @(ModelExtensions.GetPropertyDisplayName<Course>(nameof(Course.Id)))
-            </th>
-            <th>
-                @(ModelExtensions.GetPropertyDisplayName<Course>(nameof(Course.Title)))
-            </th>
-            <th>
-                @(ModelExtensions.GetPropertyDisplayName<Course>(nameof(Course.Credits)))
-            </th>
-            <th>
-                @(ModelExtensions.GetPropertyDisplayName<Course>(nameof(Course.Department)))
-            </th>
+            <th>@(ModelExtensions.GetPropertyDisplayName<Course>(nameof(Course.Id)))</th>
+            <th>@(ModelExtensions.GetPropertyDisplayName<Course>(nameof(Course.Title)))</th>
+            <th>@(ModelExtensions.GetPropertyDisplayName<Course>(nameof(Course.Credits)))</th>
+            <th>@(ModelExtensions.GetPropertyDisplayName<Course>(nameof(Course.Department)))</th>
             <th></th>
         </tr>
     </thead>
