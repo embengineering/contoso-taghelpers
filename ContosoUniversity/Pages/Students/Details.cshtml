@@ -1,4 +1,6 @@
 ﻿@page "{id:int}"
+@using ContosoUniversity.Infrastructure
+@using ContosoUniversity.Models
 @model Students.Details
 
 @{
@@ -11,42 +13,23 @@
     <h4>Student</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            <display-label-tag for="Data.LastName"/>
-        </dt>
-        <dd>
-            <display-tag for="Data.LastName"/>
-        </dd>
-        <dt>
-            <display-label-tag for="Data.FirstMidName" />
-        </dt>
-        <dd>
-            <display-tag for="Data.FirstMidName" />
-        </dd>
-        <dt>
-            <display-label-tag for="Data.EnrollmentDate" />
-        </dt>
-        <dd>
-            <display-tag for="Data.EnrollmentDate" />
-        </dd>
-        <dt>
-            <display-label-tag for="Data.Enrollments" />
-        </dt>
+        <dt name-for="Data.LastName"></dt>
+        <dd value-for="Data.LastName"></dd>
+        <dt name-for="Data.FirstMidName"></dt>
+        <dd value-for="Data.FirstMidName"></dd>
+        <dt name-for="Data.EnrollmentDate"></dt>
+        <dd value-for="Data.EnrollmentDate"></dd>
         <dd>
             <table class="table">
                 <tr>
-                    <th>Course Title</th>
-                    <th>Grade</th>
+                    <th>@(ModelExtensions.GetPropertyDisplayName<Enrollment>(nameof(Enrollment.Course)))</th>
+                    <th>@(ModelExtensions.GetPropertyDisplayName<Enrollment>(nameof(Enrollment.Grade)))</th>
                 </tr>
                 @for (var i = 0; i < Model.Data.Enrollments.Count; i++)
                 {
                     <tr>
-                        <td>
-                            <display-tag for="Data.Enrollments[i].CourseTitle" />
-                        </td>
-                        <td>
-                            <display-tag for="Data.Enrollments[i].Grade" />
-                        </td>
+                        <td value-for="Data.Enrollments[i].CourseTitle"></td>
+                        <td value-for="Data.Enrollments[i].Grade"></td>
                     </tr>
                 }
             </table>
