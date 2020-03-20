@@ -16,11 +16,10 @@ namespace ContosoUniversity.Infrastructure.SelectListProviders
         public override async Task<IEnumerable<SelectListItem>> GetOptions()
         {
             var items = await DbContext.Departments
-                .OrderBy(x => x.Name)
                 .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
                 .ToArrayAsync();
 
-            return items;
+            return items.OrderBy(x => x.Text);
         }
     }
 }
