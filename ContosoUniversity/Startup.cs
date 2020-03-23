@@ -3,7 +3,6 @@ using ContosoUniversity.Data;
 using ContosoUniversity.Infrastructure;
 using ContosoUniversity.Pages.Instructors;
 using FluentValidation.AspNetCore;
-using HtmlTags;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

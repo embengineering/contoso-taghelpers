@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace ContosoUniversity.Infrastructure
+namespace ContosoUniversity.Infrastructure.Extensions
 {
     public static class DbContextExtensions
     {

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using ContosoUniversity.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 

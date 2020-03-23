@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace ContosoUniversity.Infrastructure
+namespace ContosoUniversity.Infrastructure.SelectListProviders
 {
     public interface ISelectListOptionsProvider
     {

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace ContosoUniversity.Infrastructure
+namespace ContosoUniversity.Infrastructure.Extensions
 {
     public static class StringExtensions
     {

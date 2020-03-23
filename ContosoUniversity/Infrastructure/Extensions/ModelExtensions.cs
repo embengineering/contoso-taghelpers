@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
-namespace ContosoUniversity.Infrastructure
+namespace ContosoUniversity.Infrastructure.Extensions
 {
     public static class ModelExtensions
     {

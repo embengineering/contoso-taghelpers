@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using ContosoUniversity.Data;
+using ContosoUniversity.Infrastructure.SelectListProviders;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ContosoUniversity.Infrastructure.Attributes
