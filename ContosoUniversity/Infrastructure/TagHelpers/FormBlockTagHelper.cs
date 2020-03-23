@@ -101,21 +101,17 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
             const string isoDateFormat = "yyyy-MM-dd"; // default iso format required for HTML5 date input
             const string numericFormat = "0.00";
 
-            if (For.ModelExplorer.ModelType == typeof(DateTime?))
+            var propertyType = For.ModelExplorer.ModelType;
+
+            if (DateTypes.Contains(propertyType))
             {
                 var parsedValue = (DateTime?) For.Model;
                 return parsedValue.HasValue
                     ? parsedValue.Value.ToString(isoDateFormat)
                     : string.Empty;
             }
-
-            if (For.ModelExplorer.ModelType == typeof(DateTime))
-            {
-                var parsedValue = (DateTime)For.Model;
-                return parsedValue.ToString(isoDateFormat);
-            }
             
-            if (For.ModelExplorer.ModelType == typeof(decimal?))
+            if (DecimalTypes.Contains(propertyType))
             {
                 var parsedValue = (decimal?)For.Model;
                 return parsedValue.HasValue
@@ -123,18 +119,41 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
                     : string.Empty;
             }
 
-            if (For.ModelExplorer.ModelType == typeof(decimal))
-            {
-                var parsedValue = (decimal)For.Model;
-                return parsedValue.ToString(numericFormat);
-            }
-
             return For.Model;
         }
 
         private string GetInputTypeFromModel(Type modelType)
         {
-            var numberTypes = new[]
+            if (NumericTypes.Contains(modelType))
+                return "number";
+
+            if (DateTypes.Contains(modelType))
+                return "date";
+
+            if (modelType == typeof(string))
+                return "text";
+
+            return string.Empty;
+        }
+
+        private IEnumerable<Type> DateTypes =>
+            new[]
+            {
+                typeof(DateTime),
+                typeof(DateTime?),
+                typeof(DateTimeOffset),
+                typeof(DateTimeOffset?)
+            };
+
+        private IEnumerable<Type> DecimalTypes =>
+            new[]
+            {
+                typeof(decimal?),
+                typeof(decimal)
+            };
+
+        private IEnumerable<Type> NumericTypes =>
+            new[]
             {
                 typeof(int),
                 typeof(int?),
@@ -143,30 +162,5 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
                 typeof(decimal),
                 typeof(decimal?)
             };
-
-            var textTypes = new[]
-            {
-                typeof(string)
-            };
-
-            var dateTypes = new[]
-            {
-                typeof(DateTime),
-                typeof(DateTime?),
-                typeof(DateTimeOffset),
-                typeof(DateTimeOffset?)
-            };
-
-            if (numberTypes.Contains(modelType))
-                return "number";
-
-            if (dateTypes.Contains(modelType))
-                return "date";
-
-            if (textTypes.Contains(modelType))
-                return "text";
-
-            return string.Empty;
-        }
     }
 }
