@@ -99,6 +99,7 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
         private object GetValueByType()
         {
             const string isoDateFormat = "yyyy-MM-dd"; // default iso format required for HTML5 date input
+            const string numericFormat = "0.00";
 
             if (For.ModelExplorer.ModelType == typeof(DateTime?))
             {
@@ -112,6 +113,20 @@ namespace ContosoUniversity.Infrastructure.TagHelpers
             {
                 var parsedValue = (DateTime)For.Model;
                 return parsedValue.ToString(isoDateFormat);
+            }
+            
+            if (For.ModelExplorer.ModelType == typeof(decimal?))
+            {
+                var parsedValue = (decimal?)For.Model;
+                return parsedValue.HasValue
+                    ? parsedValue.Value.ToString(numericFormat)
+                    : string.Empty;
+            }
+
+            if (For.ModelExplorer.ModelType == typeof(decimal))
+            {
+                var parsedValue = (decimal)For.Model;
+                return parsedValue.ToString(numericFormat);
             }
 
             return For.Model;
