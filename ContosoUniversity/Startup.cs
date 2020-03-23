@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using ContosoUniversity.Data;
 using ContosoUniversity.Infrastructure;
-using ContosoUniversity.Infrastructure.Tags;
 using ContosoUniversity.Pages.Instructors;
 using FluentValidation.AspNetCore;
 using HtmlTags;
@@ -42,8 +41,6 @@ namespace ContosoUniversity
             services.AddScoped(
                 typeof(IPipelineBehavior<,>), 
                 typeof(LoggingBehavior<,>));
-
-            services.AddHtmlTags(new TagConventions());
 
             services.AddRazorPages(opt =>
                 {
