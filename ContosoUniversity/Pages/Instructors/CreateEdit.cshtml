@@ -19,33 +19,18 @@
             <form-block asp-for="Data.HireDate"/>
             <form-block asp-for="Data.OfficeAssignmentLocation"/>
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <table>
-                        <tr>
-                        @{
-                            int cnt = 0;
-
-                            foreach (var course in Model.Data.AssignedCourses)
-                            {
-                                if (cnt++ % 3 == 0)
-                                {
-                                    @:</tr><tr>
-                                }
-                                @:<td>
-                                <label style="font-weight: normal">
-                                    <input type="checkbox"
-                                           name="data.selectedCourses"
-                                           value="@course.CourseId"
-                                           @(Html.Raw(course.Assigned ? "checked=\"checked\"" : ""))/>
-                                    @course.CourseId : @course.Title
-                                </label>
-                                @:</td>
-                            }
-                            @:</tr>
-                        }
-
-                    </table>
-                </div>
+                @foreach (var course in Model.Data.AssignedCourses)
+                {
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input id="@($"cb{course.CourseId}")" 
+                               name="@($"cb{course.CourseId}")" 
+                               class="custom-control-input" 
+                               type="checkbox" 
+                               value="@course.CourseId" 
+                               @(Html.Raw(course.Assigned ? "checked=\"checked\"" : "")) />
+                        <label class="custom-control-label" for="@($"cb{course.CourseId}")">@course.CourseId : @course.Title</label>
+                    </div>
+                }
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary"/>
