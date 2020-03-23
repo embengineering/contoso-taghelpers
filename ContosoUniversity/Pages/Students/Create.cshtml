@@ -12,13 +12,11 @@
 <div class="row">
     <div class="col-md-4">
         <form method="post">
-            @Html.ValidationDiv()
-            @Html.FormBlock(m => m.Data.LastName)
-            @Html.FormBlock(m => m.Data.FirstMidName)
-            @Html.FormBlock(m => m.Data.EnrollmentDate)
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+            <div asp-validation-summary="All"></div>
+            <form-block asp-for="Data.LastName" />
+            <form-block asp-for="Data.FirstMidName" />
+            <form-block asp-for="Data.EnrollmentDate" />
+            <form-block-submit>Create</form-block-submit>
         </form>
     </div>
 </div>

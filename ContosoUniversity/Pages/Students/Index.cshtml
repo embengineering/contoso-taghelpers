@@ -1,4 +1,5 @@
 ﻿@page
+@using ContosoUniversity.Infrastructure.Extensions
 @model Students.Index
 
 @{
@@ -25,15 +26,17 @@
     <thead>
         <tr>
             <th>
-                <a asp-page="Index" asp-route-sortOrder="@Model.Data.NameSortParm" asp-route-currentFilter="@Model.Data.CurrentFilter">Last Name</a>
+                <a asp-page="Index" asp-route-sortOrder="@Model.Data.NameSortParm" asp-route-currentFilter="@Model.Data.CurrentFilter">
+                    @(ModelExtensions.GetPropertyDisplayName<Index.Model>(nameof(Index.Model.LastName)))
+                </a>
             </th>
+            <th>@(ModelExtensions.GetPropertyDisplayName<Index.Model>(nameof(Index.Model.FirstMidName)))</th>
             <th>
-                First Name
+                <a asp-page="Index" asp-route-sortOrder="@Model.Data.DateSortParm" asp-route-currentFilter="@Model.Data.CurrentFilter">
+                    @(ModelExtensions.GetPropertyDisplayName<Index.Model>(nameof(Index.Model.EnrollmentDate)))
+                </a>
             </th>
-            <th>
-                <a asp-page="Index" asp-route-sortOrder="@Model.Data.DateSortParm" asp-route-currentFilter="@Model.Data.CurrentFilter">Enrollment Date</a>
-            </th>
-            <th>Enrollments Count</th>
+            <th>@(ModelExtensions.GetPropertyDisplayName<Index.Model>(nameof(Index.Model.EnrollmentsCount)))</th>
             <th></th>
         </tr>
     </thead>
@@ -42,18 +45,10 @@
         @foreach (var item in Model.Data.Results)
         {
             <tr>
-                <td>
-                    <display-tag for="Data.Results[i].LastName"/>
-                </td>
-                <td>
-                    <display-tag for="Data.Results[i].FirstMidName" />
-                </td>
-                <td>
-                    <display-tag for="Data.Results[i].EnrollmentDate" />
-                </td>
-                <td>
-                    <display-tag for="Data.Results[i].EnrollmentsCount" />
-                </td>
+                <td value-for="Data.Results[i].LastName"></td>
+                <td value-for="Data.Results[i].FirstMidName"></td>
+                <td value-for="Data.Results[i].EnrollmentDate"></td>
+                <td value-for="Data.Results[i].EnrollmentsCount"></td>
                 <td>
                     <a asp-page="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-page="Details" asp-route-id="@item.Id">Details</a> |

@@ -12,18 +12,14 @@
 <div class="row">
     <div class="col-md-4">
         <form method="POST">
-            @Html.ValidationDiv()
-            @Html.Input(model => model.Data.Id)
-            @Html.Input(model => model.Data.RowVersion)
-
-            @Html.FormBlock(m => m.Data.Name)
-            @Html.FormBlock(m => m.Data.Budget)
-            @Html.FormBlock(m => m.Data.StartDate)
-            @Html.FormBlock(m => m.Data.Administrator)
-
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+            <div asp-validation-summary="All"></div>
+            <input type="hidden" asp-for="Data.Id" />
+            <input type="hidden" asp-for="Data.RowVersion" />
+            <form-block asp-for="Data.Name" />
+            <form-block asp-for="Data.Budget" />
+            <form-block asp-for="Data.StartDate" />
+            <form-block asp-for="Data.Administrator" />
+            <form-block-submit>Save</form-block-submit>
         </form>
     </div>
 </div>

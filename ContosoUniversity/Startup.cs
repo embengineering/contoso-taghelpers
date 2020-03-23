@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using ContosoUniversity.Data;
 using ContosoUniversity.Infrastructure;
-using ContosoUniversity.Infrastructure.Tags;
 using ContosoUniversity.Pages.Instructors;
 using FluentValidation.AspNetCore;
-using HtmlTags;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,13 +41,12 @@ namespace ContosoUniversity
                 typeof(IPipelineBehavior<,>), 
                 typeof(LoggingBehavior<,>));
 
-            services.AddHtmlTags(new TagConventions());
-
             services.AddRazorPages(opt =>
                 {
                     opt.Conventions.ConfigureFilter(new DbContextTransactionPageFilter());
                     opt.Conventions.ConfigureFilter(new ValidatorPageFilter());
                 })
+                .AddRazorRuntimeCompilation()
                 .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup>(); });
 
             services.AddMvc(opt => opt.ModelBinderProviders.Insert(0, new EntityModelBinderProvider()));
