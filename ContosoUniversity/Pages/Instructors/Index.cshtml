@@ -101,7 +101,7 @@
     <table class="table">
         <tr>
             <th>Name</th>
-            <th>Grade</th>
+            <th class="text-center">Grade</th>
         </tr>
         @{ i = 0; }
         @foreach (var item in Model.Data.Enrollments)
@@ -110,11 +110,9 @@
                 <td>
                     @item.StudentFullName
                 </td>
-                <td>
-                    <display-tag for="Data.Enrollments[i].Grade" />
-                </td>
+                <td class="text-center" value-for="Data.Enrollments[i].Grade"></td>
             </tr>
             i++;
         }
     </table>
-            }
+}
