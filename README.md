@@ -12,7 +12,7 @@ To run, execute the build script (`Build.ps1`). Open the solution and run!
 
 ### `<form-block-display asp-for="Model.Property" />`
 
-This helper was designed to cover the case of displaying a form in read-only without any fields. The HTML markup looks as follow:
+This helper was designed to cover the case of displaying a form in read-only mode without any fields. The HTML markup looks as follow:
 ```
 <div class="form-group">
   <label class="control-label" for="Model_Property">Title</label>
@@ -41,9 +41,9 @@ This helper was designed to cover the case of an editable form. The HTML markup 
   </span>
 </div>
 ```
-Note that this helper will try to resolve common data types such as: decimal, int, string, date; including their nullable equivalent. Also, note that it will add a label, data validation attributes and span element.
+Note that this helper will try to resolve common data types such as: decimal, int, string, date, including their nullable equivalent. Also, note that it will add a label, data validation attributes and validation span element.
 
-Select fields work the same way but technically require more complexity to resolve the source based on a C# attribute in the propery, for example:
+`<select>` fields work the same way but require more technical complexity to resolve the source based on a C# attribute in the propery, for example:
 ```
 [SelectList(typeof(DepartmentSelectListOptionsProvider))]
 public Department Department { get; set; }
@@ -51,7 +51,7 @@ public Department Department { get; set; }
 
 ### `<tl name-for="Model.PropertyName><tl/>`
 
-This attribute helper is allowed in any HTML element. It will try to resolve the **title** by using the Display Name attribute first, or then break down the word into separate words if is a multi-word properly. For example, if `Model.HomeAddress`, then "Home Address" will be used. The attribute will return the following HTML markup:
+This attribute helper is allowed in any HTML element. It will try to resolve the **title** by using the Display Name attribute first, or break down the word into separate words if is a multi-word properly. For example, if `Model.HomeAddress`, then "Home Address" will be used. The attribute will return the following HTML markup:
 ```
 <lt>Propery Name</tl>
 ```
